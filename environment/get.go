@@ -9,6 +9,7 @@ import (
 func Get() (*Environment, error) {
 	apiVersion := os.Getenv("API_VERSION")
 	apiPort := os.Getenv("API_PORT")
+	sqlitePath := os.Getenv("SQLITE_PATH")
 
 	switch "" {
 	case apiVersion,
@@ -19,5 +20,6 @@ func Get() (*Environment, error) {
 	return &Environment{
 		APIVersion: apiVersion,
 		APIPort:    apiPort,
+		SQLitePath: sqlitePath,
 	}, nil
 }

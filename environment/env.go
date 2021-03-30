@@ -4,4 +4,5 @@ package environment
 type Environment struct {
 	APIVersion string
 	APIPort    string
+	SQLitePath string
 }
