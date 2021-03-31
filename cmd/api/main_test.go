@@ -7,7 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/lffranca/api/api"
 	"github.com/lffranca/api/environment"
+	"github.com/lffranca/api/repository"
 )
 
 func TestMain(t *testing.T) {
@@ -20,12 +22,18 @@ func TestMain(t *testing.T) {
 		log.Panicln(errENV)
 	}
 
-	router := gin.Default()
-	v1Router := router.Group(env.APIVersion)
+	conn, errConn := repository.Get(&repository.GetInput{
+		Type: repository.ConnectionSQLite,
+		Env:  env,
+	})
+	if errConn != nil {
+		log.Panicln(errConn)
+	}
 
-	v1Router.GET("/contas", func(c *gin.Context) {})
-	v1Router.GET("/contas/:id", func(c *gin.Context) {})
-	v1Router.GET("/contas/:id/transacoes", func(c *gin.Context) {})
+	defer conn.Close()
+
+	router := gin.Default()
+	api.Router(router.Group(env.APIVersion))
 
 	if err := router.Run(fmt.Sprintf(":%s", env.APIPort)); err != nil {
 		log.Panicln(err)

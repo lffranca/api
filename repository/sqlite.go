@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/lffranca/api/environment"
 	_ "github.com/mattn/go-sqlite3"
@@ -17,6 +18,10 @@ func sqliteConnection(env *environment.Environment) (*sql.DB, error) {
 	db, err := sql.Open("sqlite3", pathDB)
 	if err != nil {
 		return nil, err
+	}
+
+	if _, err := db.Exec(queryBase); err != nil {
+		return nil, fmt.Errorf("[ERROR] Query base: %v", err)
 	}
 
 	return db, nil

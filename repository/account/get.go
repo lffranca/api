@@ -1,7 +1,12 @@
 package account
 
-func Get() (AccountRepository, error) {
-	// rep, errRep := repository.
+import "github.com/lffranca/api/repository"
 
-	return &sqliteRepository{}, nil
+func Get() (AccountRepository, error) {
+	db, errDB := repository.GetDB()
+	if errDB != nil {
+		return nil, errDB
+	}
+
+	return &sqliteRepository{db: db}, nil
 }

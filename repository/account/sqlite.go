@@ -11,7 +11,7 @@ type sqliteRepository struct {
 
 // Get Get
 func (item *sqliteRepository) Get(ctx context.Context) ([]Account, error) {
-	query := ``
+	query := `select id, status from accounts;`
 
 	rows, errRows := item.db.QueryContext(ctx, query)
 	if errRows != nil {
@@ -38,14 +38,14 @@ func (item *sqliteRepository) Get(ctx context.Context) ([]Account, error) {
 
 // GetByID GetByID
 func (item *sqliteRepository) GetByID(ctx context.Context, id string) (*Account, error) {
-	query := ``
+	query := `select id, status from accounts where id = ?;`
 
 	itemSQL := accountSQL{}
 	if err := item.db.QueryRowContext(ctx, query, id).Scan(
 		&itemSQL.ID,
 		&itemSQL.Status,
 	); err != nil {
-		return nil, err
+		return nil, nil
 	}
 
 	itemToReturn := itemSQL.GetObject()
