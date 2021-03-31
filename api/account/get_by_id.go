@@ -5,20 +5,20 @@ import (
 	model "github.com/lffranca/api/repository/account"
 )
 
-func GetByID(ctx *gin.Context) {
-	id := ctx.Param("id")
+func GetByID(c *gin.Context) {
+	id := c.Param("id")
 
 	acc, errAcc := model.Get()
 	if errAcc != nil {
-		ctx.JSON(400, map[string]string{"message": "Invalid request"})
+		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
 
-	accountsItem, errAccountsItem := acc.GetByID(ctx.Request.Context(), id)
+	accountsItem, errAccountsItem := acc.GetByID(c.Request.Context(), id)
 	if errAccountsItem != nil {
-		ctx.JSON(400, map[string]string{"message": "Invalid request"})
+		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
 
-	ctx.JSON(200, accountsItem)
+	c.JSON(200, accountsItem)
 }

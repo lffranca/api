@@ -5,18 +5,18 @@ import (
 	model "github.com/lffranca/api/repository/account"
 )
 
-func Get(ctx *gin.Context) {
+func Get(c *gin.Context) {
 	acc, errAcc := model.Get()
 	if errAcc != nil {
-		ctx.JSON(400, map[string]string{"message": "Invalid request"})
+		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
 
-	accounts, errAccounts := acc.Get(ctx.Request.Context())
+	accounts, errAccounts := acc.Get(c.Request.Context())
 	if errAccounts != nil {
-		ctx.JSON(400, map[string]string{"message": "Invalid request"})
+		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
 
-	ctx.JSON(200, accounts)
+	c.JSON(200, accounts)
 }

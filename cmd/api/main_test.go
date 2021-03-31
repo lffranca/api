@@ -1,41 +1,29 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"testing"
+// func TestMain(t *testing.T) {
+// 	if err := godotenv.Load(); err != nil {
+// 		log.Println("[WARNING] Not use .env file")
+// 	}
 
-	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"github.com/lffranca/api/api"
-	"github.com/lffranca/api/environment"
-	"github.com/lffranca/api/repository"
-)
+// 	env, errENV := environment.Get()
+// 	if errENV != nil {
+// 		t.Error(errENV)
+// 	}
 
-func TestMain(t *testing.T) {
-	if err := godotenv.Load(); err != nil {
-		log.Println("[WARNING] Not use .env file")
-	}
+// 	conn, errConn := repository.Get(&repository.GetInput{
+// 		Type: repository.ConnectionSQLite,
+// 		Env:  env,
+// 	})
+// 	if errConn != nil {
+// 		t.Error(errConn)
+// 	}
 
-	env, errENV := environment.Get()
-	if errENV != nil {
-		t.Error(errENV)
-	}
+// 	defer conn.Close()
 
-	conn, errConn := repository.Get(&repository.GetInput{
-		Type: repository.ConnectionSQLite,
-		Env:  env,
-	})
-	if errConn != nil {
-		t.Error(errConn)
-	}
+// 	router := gin.Default()
+// 	api.Router(router.Group(env.APIVersion))
 
-	defer conn.Close()
-
-	router := gin.Default()
-	api.Router(router.Group(env.APIVersion))
-
-	if err := router.Run(fmt.Sprintf(":%s", env.APIPort)); err != nil {
-		t.Error(err)
-	}
-}
+// 	if err := router.Run(fmt.Sprintf(":%s", env.APIPort)); err != nil {
+// 		t.Error(err)
+// 	}
+// }
