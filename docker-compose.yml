@@ -1,0 +1,16 @@
+version: "3"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: lffranca/api:latest
+    ports:
+      - 8000:8000
+    environment:
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
+      - RUNLEVEL=3
+
+      - API_VERSION=/conductor/v1/api
+      - API_PORT=8000
+      - SQLITE_PATH=./app.db

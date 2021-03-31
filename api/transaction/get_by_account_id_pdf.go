@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,12 +14,14 @@ func GetByAccountIDPDF(c *gin.Context) {
 
 	md, errMD := model.Get()
 	if errMD != nil {
+		log.Println("errMD: ", errMD)
 		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
 
 	items, errItems := md.GetByAccountID(c.Request.Context(), id)
 	if errItems != nil {
+		log.Println("errItems: ", errItems)
 		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
@@ -28,14 +31,16 @@ func GetByAccountIDPDF(c *gin.Context) {
 		Input:    map[string]interface{}{"Transactions": items},
 	})
 	if errHTML != nil {
+		log.Println("errHTML: ", errHTML)
 		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
 
-	pdfItem, errCSVItem := export.NewPDF(&export.NewPDFInput{
+	pdfItem, errPDFItem := export.NewPDF(&export.NewPDFInput{
 		Template: htmlItem.Bytes(),
 	})
-	if errCSVItem != nil {
+	if errPDFItem != nil {
+		log.Println("errPDFItem: ", errPDFItem)
 		c.JSON(400, map[string]string{"message": "Invalid request"})
 		return
 	}
