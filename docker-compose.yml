@@ -13,4 +13,9 @@ services:
 
       - API_VERSION=/conductor/v1/api
       - API_PORT=8000
-      - SQLITE_PATH=./app.db
+      - SQLITE_PATH=/database/app.db
+    volumes:
+      - "sqlite:/database"
+
+volumes:
+  sqlite:
