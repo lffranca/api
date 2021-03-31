@@ -19,7 +19,7 @@ func TestMain(t *testing.T) {
 
 	env, errENV := environment.Get()
 	if errENV != nil {
-		log.Panicln(errENV)
+		t.Error(errENV)
 	}
 
 	conn, errConn := repository.Get(&repository.GetInput{
@@ -27,7 +27,7 @@ func TestMain(t *testing.T) {
 		Env:  env,
 	})
 	if errConn != nil {
-		log.Panicln(errConn)
+		t.Error(errConn)
 	}
 
 	defer conn.Close()
@@ -36,6 +36,6 @@ func TestMain(t *testing.T) {
 	api.Router(router.Group(env.APIVersion))
 
 	if err := router.Run(fmt.Sprintf(":%s", env.APIPort)); err != nil {
-		log.Panicln(err)
+		t.Error(err)
 	}
 }

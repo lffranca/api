@@ -1,6 +1,8 @@
 package transaction
 
-// Transaction Transaction
-type Transaction interface {
-	GetByAccountID()
+import "context"
+
+// TransactionRepository TransactionRepository
+type TransactionRepository interface {
+	GetByAccountID(context.Context, string) ([]Transaction, error)
 }
