@@ -11,7 +11,7 @@ services:
       - XDG_RUNTIME_DIR=/tmp/runtime-root
       - RUNLEVEL=3
 
-      - API_VERSION=/conductor/v1/api
+      - API_VERSION=/v1/api
       - API_PORT=8000
       - SQLITE_PATH=/database/app.db
     volumes:
